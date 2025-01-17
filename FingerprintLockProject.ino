@@ -11,8 +11,8 @@
 #define RELAY_PIN 13             // Pin connected to the relay
 #define MASTER_PIN "9999"        // Default master PIN
 #define OPEN_DURATION 5000       // Time (ms) for which the relay remains active
-#define SSID "WN-254DA0"         // SSID for WiFi connection
-#define PASSWORD "iayeyouwi1"    // Password for WiFi Connection
+#define SSID "SSID"              // SSID for WiFi connection
+#define PASSWORD "PASSWORD"      // Password for WiFi Connection
 
 // Initialize LCD display (16x2)
 Waveshare_LCD1602_RGB lcd(16, 2);
@@ -298,102 +298,51 @@ void fingerprintMenu() {
 }
 
 void addFingerprint() {
-    // Prompt the user to enter an ID for the new fingerprint
     lcd.clear();
-    lcd.send_string("Enter ID:");
-    String id = "";
+    lcd.send_string("Assigning ID...");
+    delay(1000);
 
-    while (true) {
-        char key = keypad.getKey();
-        if (key >= '0' && key <= '9') {
-            // Append numeric keys to the ID
-            if (id.length() < 3) {
-                id += key;
-                lcd.setCursor(10, 0);
-                lcd.send_string("   "); // Clear previous ID display
-                lcd.setCursor(10, 0);
-                lcd.send_string(id.c_str());
-            }
-        } else if (key == 'B') {
-            // Remove the last character from the ID
-            if (!id.isEmpty()) {
-                id.remove(id.length() - 1);
-                lcd.setCursor(10, 0);
-                lcd.send_string("   "); // Clear previous ID display
-                lcd.setCursor(10, 0);
-                lcd.send_string(id.c_str());
-            }
-        } else if (key == 'C') {
-            // Clear the entered ID
-            id = "";
-            lcd.setCursor(10, 0);
-            lcd.send_string("   ");
-        } else if (key == '#') {
-            // Validate the entered ID
-            if (id.isEmpty()) {
-                lcd.clear();
-                lcd.send_string("ID Required");
-                delay(2000);
-                lcd.clear();
-                lcd.send_string("Enter ID:");
-                continue;
-            }
-
-            int fingerID = id.toInt();
-            if (fingerID < 0 || fingerID > 127) {
-                // Check if the ID is within the valid range
-                lcd.clear();
-                lcd.send_string("Invalid ID");
-                delay(2000);
-                lcd.clear();
-                lcd.send_string("Enter ID:");
-                id = "";
-                continue;
-            }
-
-            // Check if the ID is already in use
-            if (finger.loadModel(fingerID) == FINGERPRINT_OK) {
-                lcd.clear();
-                lcd.send_string("ID Exists");
-                lcd.setCursor(0, 1);
-                lcd.send_string("Choose different");
-                delay(2000);
-                lcd.clear();
-                lcd.send_string("Enter ID:");
-                id = "";
-                continue;
-            }
-
-            // Prompt to place a finger for enrollment
-            lcd.clear();
-            lcd.send_string("Place Finger");
-
-            if (fingerEnroll(fingerID)) {
-                // Successful enrollment
-                lcd.clear();
-                lcd.send_string("Finger Added");
-                delay(2000);
-                lcd.clear();
-                showDefaultScreen();
-                return;
-            } else {
-                // Enrollment failed
-                lcd.clear();
-                lcd.send_string("Enroll Failed");
-                delay(2000);
-                lcd.clear();
-                lcd.send_string("Enter ID:");
-                id = "";
-                continue;
-            }
-        } else if (key == '*') {
-            // Cancel the operation and return to the default screen
-            lcd.clear();
-            showDefaultScreen();
-            return;
+    // Find next free ID
+    int fingerID = -1;
+    for (int id = 0; id <= 127; id++) {
+        if (finger.loadModel(id) != FINGERPRINT_OK) {
+            fingerID = id;
+            break;
         }
     }
+
+    // If no free ID is found
+    if (fingerID == -1) {
+        lcd.clear();
+        lcd.send_string("No Free IDs");
+        delay(2000);
+        lcd.clear();
+        showDefaultScreen();
+        return;
+    }
+
+    lcd.clear();
+    lcd.send_string("Place Finger");
+
+    // Fingerprint read and store
+    if (fingerEnroll(fingerID)) {
+        lcd.clear();
+        lcd.send_string("Finger Added");
+        lcd.setCursor(0, 1);
+        lcd.send_string("ID: ");
+        lcd.send_string(String(fingerID).c_str());
+        delay(3000);
+        lcd.clear();
+        showDefaultScreen(); // Back to default screen
+    } else {
+        lcd.clear();
+        lcd.send_string("Enroll Failed");
+        delay(2000);
+        lcd.clear();
+        showDefaultScreen(); // Back to default screen
+    }
 }
+
 
 bool fingerEnroll(int id) {
     // Enroll a fingerprint for the given ID
@@ -465,7 +414,7 @@ void removeFingerprint() {
         lcd.send_string("No Finger");
         delay(2000);
         lcd.clear();
-        showDefaultScreen(); // Return to the default screen
+        showMenu(); // Back to Menu
         return;
     }
 
@@ -533,7 +482,7 @@ void removeFingerprint() {
                             lcd.send_string("No Finger");
                             delay(2000);
                             lcd.clear();
-                            showDefaultScreen();
+                            showMenu();
                             return;
                         }
 
@@ -562,11 +511,12 @@ void removeFingerprint() {
         } else if (key == '*') {
             // Exit the removal menu
             lcd.clear();
-            showDefaultScreen();
+            showMenu();
             return;
         }
     }
 }
+
 
 void changePin() {
     // Change the PIN after verifying the old PIN
