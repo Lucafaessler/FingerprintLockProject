@@ -327,7 +327,7 @@ void addFingerprint() {
         lcd.send_string("No Free IDs");
         delay(2000);
         lcd.clear();
-        showDefaultScreen();
+        fingerprintMenu();
         return;
     }
 
@@ -343,13 +343,13 @@ void addFingerprint() {
         lcd.send_string(String(fingerID).c_str());
         delay(3000);
         lcd.clear();
-        showDefaultScreen(); // Back to default screen
+        fingerprintMenu(); // Back to Fingerprint screen
     } else {
         lcd.clear();
         lcd.send_string("Enroll Failed");
         delay(2000);
         lcd.clear();
-        showDefaultScreen(); // Back to default screen
+        fingerprintMenu(); // Back to Fingerprint screen
     }
 }
 
@@ -405,7 +405,7 @@ bool fingerEnroll(int id) {
 }
 
 void removeFingerprint() {
-    // Remove a fingerprint from the system
+    // Display loading message while IDs are being fetched
     lcd.clear();
     lcd.send_string("Loading IDs...");
 
@@ -424,7 +424,7 @@ void removeFingerprint() {
         lcd.send_string("No Finger");
         delay(2000);
         lcd.clear();
-        showMenu(); // Back to Menu
+        fingerprintMenu(); // Back to Menu
         return;
     }
 
@@ -449,11 +449,11 @@ void removeFingerprint() {
         }
 
         char key = keypad.getKey();
-        if (key == 'A') {
+        if (key == 'B') {
             // Navigate to the previous ID
             currentIndex = (currentIndex - 1 + occupiedCount) % occupiedCount;
             screenNeedsUpdate = true;
-        } else if (key == 'B') {
+        } else if (key == 'A') {
             // Navigate to the next ID
             currentIndex = (currentIndex + 1) % occupiedCount;
             screenNeedsUpdate = true;
@@ -462,7 +462,9 @@ void removeFingerprint() {
             int idToDelete = occupiedIDs[currentIndex];
             lcd.clear();
             lcd.send_string("Delete ID:");
+            lcd.setCursor(0, 1);
             lcd.send_string(String(idToDelete).c_str());
+            lcd.send_string("?");
             lcd.setCursor(0, 1);
             lcd.send_string("No: *  |  Yes: #");
 
@@ -473,12 +475,18 @@ void removeFingerprint() {
                     // Confirm deletion
                     lcd.clear();
                     lcd.send_string("Deleting ID:");
+                    lcd.setCursor(0, 1);
                     lcd.send_string(String(idToDelete).c_str());
+                    delay(2000);
 
                     if (finger.deleteModel(idToDelete) == FINGERPRINT_OK) {
                         lcd.clear();
-                        lcd.send_string("ID Deleted");
+                        lcd.send_string("ID ");
+                        lcd.send_string(String(idToDelete).c_str());
+                        lcd.send_string(" Deleted");
                         delay(2000);
+                        lcd.clear();
+                        
 
                         // Remove the ID from the list
                         for (int i = currentIndex; i < occupiedCount - 1; i++) {
@@ -486,13 +494,16 @@ void removeFingerprint() {
                         }
                         occupiedCount--;
 
+                        fingerprintMenu();
+                        return;
+
                         if (occupiedCount == 0) {
                             // No more IDs left
                             lcd.clear();
                             lcd.send_string("No Finger");
                             delay(2000);
                             lcd.clear();
-                            showMenu();
+                            fingerprintMenu();
                             return;
                         }
 
