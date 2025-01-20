@@ -1,0 +1,182 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{svg}
+\usepackage[parfill]{parskip}
+\usepackage[a4paper, margin=2.5cm]{geometry}
+
+\begin{document}
+
+\begin{titlepage}
+    \begin{center}
+        % Logo der Universität oben
+        
+        \includegraphics[width=0.5\linewidth]{unibas.png} \\[5cm]
+        
+        % Titel
+        {\huge \textbf{Fingerprint Lock with LCD Display}} \\[1cm]
+        
+        % Untertitel
+        {\Large A Project for the Lecture in Computer Architecture} \\[0.2cm]
+        {\Large Autumn Semester 2024} \\[0.5cm]
+        
+        % Betreuer
+        {\large Supervised by Prof. Dr. Christian Tschudin} \\[2cm]
+        
+        % Autoren
+        {\large Barthan Sivanantham, Luca Fässler, Valerio Job} \\[0.5cm]
+        
+        % Datum
+        {\large January 2025}
+
+            % Abstract Section
+        \begin{abstract}
+        This project aimed to develop a secure access control system using biometric authentication and visual feedback. The system integrates an R307 fingerprint sensor for user verification, a 16x2 LCD display to provide status updates, and a 12V electromagnetic lock for physical security. Initially, a Real-Time Clock (RTC) was planned for time control; however, due to technical constraints, a prebuilt Wi-Fi module was utilized to retrieve time data and manage time-based operations effectively.
+
+        The Arduino-controlled system ensures seamless operation by processing fingerprint data, activating the relay-controlled electromagnetic lock upon successful authentication, and providing real-time feedback on the LCD. This approach highlights the flexibility of integrating alternative components to overcome challenges.
+
+        The completed system demonstrates the feasibility of creating cost-effective and reliable access control solutions for various applications. Our report details the implementation process, design considerations, and the modifications made to address encountered challenges.
+        \end{abstract}
+    \end{center}
+
+\end{titlepage}
+\tableofcontents
+
+\newpage 
+
+
+
+\newpage
+\section{Introduction}
+Access control systems are essential for securing physical spaces by regulating entry through robust and reliable mechanisms. This project aimed to design and implement a sophisticated access control system utilizing biometric authentication, real-time feedback, and custom hardware design.
+
+The system integrates multiple components, including an R307 fingerprint sensor for user authentication, a 16x2 LCD display for providing status updates, and a 12V electromagnetic lock for physical security. Time-based operations were implemented using a prebuilt Wi-Fi module to retrieve accurate time data, ensuring seamless synchronization and operational reliability.
+
+In addition to the electronic components, we utilized CAD software to design a custom safe-like box made of wood. The design includes precise cutouts for the fingerprint sensor, keypad, and LCD display, along with a separate compartment to conceal the electronics. The CAD design was handed over to a hardware store, where the wooden components were precisely cut. These parts were then assembled to create a functional safe, capable of being opened through our access control system, while maintaining the usability of a traditional safe.
+
+The project represents a comprehensive combination of hardware design, software integration, and practical implementation, demonstrating the feasibility of a secure, versatile, and user-friendly solution. This report outlines the methods, challenges, and outcomes of the project, providing detailed insights into each stage of development.
+
+
+
+    \begin{center}
+         \includegraphics[width=1\linewidth]{testpicture5.png} 
+         \captionof{Figure 1:}{ Finished box on the left and 3D Design of the box on the right}
+         \\[1cm] 
+    \end{center}
+    
+\newpage
+\section{Methods}
+The development of the access control system involved a combination of hardware integration, software development, and custom physical design. This section outlines the key components used, their integration, and the construction process of the safe.
+
+\subsection{Hardware Components}
+The system utilized the following key hardware components:
+\begin{itemize}
+    \item \textbf{Arduino R4 Minima/R4 WIFI:} \textcolor{red}{TODO}
+    \item \textbf{R307 Fingerprint Sensor:} Used for biometric authentication, capable of storing and verifying up to 1,000 fingerprints.
+    \item \textbf{16x2 LCD Display:} Provides real-time feedback to the user, displaying messages such as "Access Granted" or "Place Finger..."
+    \item \textbf{12V Electromagnetic Lock:} Secures the safe, controlled via a relay module to handle high-power requirements safely.
+    \item \textbf{Wi-Fi Module:} Replaced the originally planned Real-Time Clock (RTC) to fetch time data from internet servers, ensuring accurate synchronization for time-based access control operations.
+    \item \textbf{2-Channel Relay Module:} Facilitates power isolation between the Arduino and the 12V lock, ensuring safety and reliability.
+    \item \textbf{RTC: } \textcolor{red}{TODO}
+\end{itemize}
+
+\subsection{System Integration}
+The design phase involved selecting the appropriate components that could be integrated into a cohesive system. We chose the Arduino as the microcontroller because of its versatility and support for multiple peripherals. The fingerprint sensor was selected for its high accuracy and reliability in biometric recognition. The LCD display was integrated to provide real-time feedback to users, and the keypad was incorporated for administrative control, allowing authorized personnel to manage access permissions directly from the device.
+
+Each component was initially tested separately to verify its functionality. Once individual testing was successful, the components were integrated, and the system's overall functionality was tested. We developed a circuit diagram that outlined all connections, ensuring that each component was correctly interfaced with the Arduino. This careful planning helped mitigate potential issues during the integration phase.
+
+    \begin{center}
+         \includegraphics[width=1\linewidth]{testpicture7.png} 
+         \captionof{Figure 2:}{ Design overview of complete circuit on the left and actual implementation on the right}
+         \\[0.5cm] 
+    \end{center}
+
+\subsection{Safe Construction}
+The physical safe was designed using CAD software, creating a detailed blueprint with precise cutouts for the fingerprint sensor, keypad, and LCD display. The design also included a separate compartment to conceal the electronic components, ensuring both functionality and aesthetic appeal.
+
+The CAD files were submitted to a hardware store for cutting the wooden components. These were then assembled manually, resulting in a functional safe with dual capabilities: it serves as a traditional storage safe and integrates the access control system.
+
+\subsection{Software Development}
+The software for the Arduino was written in C++, utilizing libraries tailored for the LCD, fingerprint sensor, and time synchronization. These include the \texttt{Waveshare LCD1602 RGB} library for display control, the \texttt{Adafruit Fingerprint} library for managing biometric data, and the \texttt{NTPClient} library for fetching real-time data via the Wi-Fi module.
+
+The code structure prioritized modularity to allow independent testing and efficient debugging. Dedicated functions were implemented for adding or removing fingerprints, checking user access permissions, and managing time-based restrictions. Fingerprints are stored in the sensor's memory, with the ability to enroll new users by assigning them unique IDs or remove specific templates when necessary.
+
+Time synchronization is handled by the Wi-Fi module, which retrieves accurate time data from online servers to enforce access restrictions, such as allowing entry only between 8:00 AM and 8:00 PM. Additionally, the master PIN system provides secure access to the menu for managing settings, ensuring administrative functions remain protected.
+
+The software serves as the backbone of the system, seamlessly integrating all components and enabling reliable and user-friendly operation.
+
+
+\subsection{Challenges and Solutions} \textcolor{red}{TODO}
+During development, integrating the Wi-Fi module presented challenges related to ensuring reliable connectivity and seamless time data retrieval. These were addressed through careful programming and testing to optimize the module's operation. Additionally, precise alignment of the safe's components required iterative adjustments during the assembly process to maintain accuracy and usability.
+
+The combination of hardware design, software development, and physical construction demonstrates the comprehensive effort involved in creating this system.
+
+\textbf{Voltage Misconfiguration:} Early in the integration phase, we encountered a major setback when the LCD and keypad were connected to a voltage higher than recommended. This oversight led to the malfunctioning of these components, necessitating their replacement. We implemented stricter checks for component specifications before integration, which helped prevent further hardware issues.
+
+\textbf{Arduino Connectivity Issues:} Midway through the project, our Arduino board ceased to be recognized by any connected PC. This issue was critical as it halted our ability to upload new code and test modifications. After extensive troubleshooting, we concluded that the board was defective and replaced it. This incident underscored the importance of having backup components and reinforced our understanding of hardware management in complex projects.
+
+\textbf{Real-Time Clock Integration:} Integrating the RTC presented challenges, particularly in synchronizing it with the system for access control based on time constraints. We resolved these issues through several iterations of software adjustments and testing, ensuring that access was granted only during the designated times.
+
+\subsubsection{Obtained Results}
+The final system met all our initial objectives, providing a secure, efficient, and user-friendly access control system. The fingerprint recognition was accurate, with no false positives in our tests. The administrative functionality allowed for easy management of user permissions, and the time-based access control operated flawlessly, restricting entry during off-hours as intended.
+
+
+\subsection{System Complexity and Achievements}
+One of the project's most complex aspects was ensuring seamless integration and operation of the hardware components with the software. Achieving this required a deep understanding of each component's technical specifications and careful programming to handle various scenarios of user interaction and system response.
+
+We are particularly proud of our development and integration of the administrative interface on the keypad and LCD. This interface allows system administrators to add or remove users efficiently, which is pivotal in environments that require high security with flexible access needs.
+
+This middle section of the report not only details our methodology and the challenges we overcame but also emphasizes the robustness and reliability of the final product, which aligns with the goals outlined in the abstract.
+
+
+\newpage
+\section{Closing Part} \textcolor{red}{TODO}
+\subsection{Division of Labor}
+The project was a collaborative effort, with distinct roles that leveraged each team member's strengths. Luca Fässler assumed the primary responsibility for hardware acquisition, ensuring that all necessary components were procured and available for the project. Alongside Valerio Job, Luca took the lead in physically assembling the system, connecting all hardware components, and troubleshooting any issues that arose during the integration process.
+
+Both Luca and Valerio jointly developed the software, writing and refining the code that controls the system's functionality. Their collaboration was crucial in integrating the hardware with the software, ensuring that the system operated seamlessly and met all design specifications. Additionally, Luca and Valerio worked together on drafting and revising this report, encapsulating the project's entire development process.
+
+Barthan Sivanantham focused on the presentation aspects of the project. He was responsible for creating the presentation that communicated our project's purpose, methodology, and results effectively. Barthan also played a pivotal role in finalizing this report, ensuring that it was coherent, well-structured, and ready for submission.
+
+\subsection{Critical Self-Assessment}
+In retrospect, there were several areas where our project approach could have been improved. Firstly, the initial voltage misconfiguration that led to the malfunctioning of key components could have been avoided with a more meticulous initial review of the hardware specifications. This oversight highlighted the importance of thorough preparatory research and validation before proceeding with the integration of complex systems.
+
+Secondly, while we managed to resolve the connectivity issues with the Arduino, having a backup strategy or additional testing hardware could have prevented the delays we experienced. Implementing routine backups of our development environment and code could also have mitigated the impact of hardware failures.
+
+\subsection{Conclusions and Lessons Learned}
+This project not only reinforced our technical skills in designing and implementing a biometric-based security system but also taught us valuable lessons in project management and teamwork. We learned the importance of clear communication and role allocation within the team, which were key to our project's success.
+
+The challenges we encountered, such as hardware malfunctions and software bugs, provided us with firsthand experience in troubleshooting and problem-solving under pressure. These experiences have prepared us for similar challenges in future projects.
+
+In conclusion, this project achieved its goals of developing a secure, efficient, and user-friendly access control system using biometric authentication. It has demonstrated the potential of integrating advanced technologies into practical applications, offering insights into both the complexities and rewards of working on interdisciplinary projects in the field of computer architecture.
+
+\newpage
+\section{Append} \textcolor{red}{TODO}
+
+\subsection{Disclaimer on Code Origin and Use of AI}
+We confirm that the coding and design for the fingerprint-based security system were developed independently by our group members. The contents of this report and the underlying project it describes are entirely the result of our collaborative efforts. For the drafting of this report, we utilized ChatGPT solely to assist in refining the wording and improving the clarity of the narrative. We affirm that all technical content, results, and conclusions presented in this report are accurate and solely produced by us, reflecting our work on the project.
+
+\subsection{References}
+
+\textbf{Component Vendors:}
+\newline
+Bastelgarage: All components used in the construction of the fingerprint-based security system were purchased from Bastelgarage (\href{https://www.bastelgarage.ch/}{www.bastelgarage.ch})
+
+\textbf{Libraries Used:}
+\newline
+\texttt{Wire.h}: Library for I2C communication.
+\newline
+\texttt{LiquidCrystal\_I2C.h}: Library for controlling I2C LCD displays.
+\newline
+\texttt{Keypad.h}: Library for managing matrix keypads
+\newline
+\texttt{Adafruit\_Fingerprint.h}: Library for interfacing with the Adafruit fingerprint sensor module
+\newline
+\texttt{RTClib.h}: Library used for interfacing with the real-time clock module.
+
+\textbf{Web References:}
+\newline
+No specific web references were used directly in the writing of this report. The descriptions and explanations are based on the collective knowledge and experience of the project group members.
+
+\end{document}
