@@ -1,0 +1,95 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{graphicx}
+\usepackage{geometry}
+\usepackage{titlesec}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\geometry{margin=1in}
+\titleformat{\section}{\Large\bfseries}{\thesection}{1em}{}
+\pagestyle{fancy}
+\lhead{Fingerprint Lock System Manual}
+\rhead{University of Basel}
+
+\title{\textbf{Fingerprint Lock System Manual}}
+\author{\textit{Valerio Job, Luca Faessler, Barththan Sivanantham}}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section{Introduction}
+This project, developed for the Computer Architecture lecture at the University of Basel, integrates multiple components to provide secure access control. This system provides a robust and secure method for access control. With PIN and fingerprint authentication, users can effectively manage entry permissions while ensuring security.
+
+\section{System Overview}
+\subsection{Components}
+\begin{itemize}
+    \item \textbf{LCD Display:} Displays system messages and prompts.
+    \item \textbf{Fingerprint Sensor:} Allows fingerprint enrollment and authentication.
+    \item \textbf{Keypad:} Enables PIN entry and menu navigation.
+\end{itemize}
+
+\subsection{Operating Modes}
+\begin{enumerate}
+    \item \textbf{Default Mode:} Displays the current time and options to access the menu or unlock the door.
+    \item \textbf{Menu Mode:} Allows the user to perform administrative tasks like managing fingerprints and changing PINs.
+\end{enumerate}
+
+\section{System Setup}
+\subsection{Powering the System}
+\begin{enumerate}
+    \item Connect the 12V power supply to the power socket.
+    \item Ensure all components are properly wired.
+\end{enumerate}
+
+\subsection{Initializing the System}
+Upon startup, the system will:
+\begin{itemize}
+    \item Display an initialization message.
+    \item Connect to the Wi-Fi network.
+    \item Synchronize the time via an NTP server.
+\end{itemize}
+
+\section{Functionalities}
+\subsection{Unlocking the Door}
+\begin{itemize}
+    \item Press \# on the keypad.
+    \item Authenticate via fingerprint within allowed hours (8 AM – 8 PM).
+    \item If a registered fingerprint is matched, the door will unlock.
+\end{itemize}
+
+\subsection{Menu Access}
+\begin{itemize}
+    \item Press * to enter the menu.
+    \item Enter the master PIN (default: 9999).
+    \item Navigate through options for fingerprint management and PIN changes.
+\end{itemize}
+
+\subsection{Menu Functionalities}
+\begin{itemize}
+    \item \textbf{Fingerprint Management:}
+    \begin{itemize}
+        \item Add Fingerprint
+        \item Remove Fingerprint
+    \end{itemize}
+    \item \textbf{Change PIN:}
+    \begin{itemize}
+        \item Enter current PIN
+        \item Set a new PIN
+    \end{itemize}
+    \item \textbf{Exit Menu:} Press * to return to the main screen.
+\end{itemize}
+
+\section{Error Handling}
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Error Message} & \textbf{Cause} & \textbf{Solution} \\
+\hline
+No Match Found & Fingerprint not recognized & Try again, enroll if necessary \\
+Wrong PIN & Incorrect PIN entered & Re-enter the correct PIN \\
+WiFi Connecting & Wi-Fi connection issue & Check SSID and password \\
+Timeout & No fingerprint detected within time & Place the finger correctly \\
+\hline
+\end{tabular}
+
+
+\end{document}
