@@ -118,7 +118,7 @@ void loop() {
             lcd.clear();
             lcd.send_string("  No Timeslot   ");
             lcd.setCursor(0, 1);
-            lcd.send_string("Access: 8AM-8PM  ");
+            lcd.send_string("Access: 8AM-8PM ");
             delay(3000);
             lcd.clear();
             showDefaultScreen(); // Return to default screen
@@ -161,7 +161,7 @@ void startFingerprint() {
                 return;
             } else {
                 lcd.clear();
-                lcd.send_string("No Match Found");
+                lcd.send_string("Access Denied");
                 delay(2000);
                 lcd.clear();
                 return;
