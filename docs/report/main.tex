@@ -115,17 +115,20 @@ The software serves as the backbone of the system, seamlessly integrating all co
 
 \subsection{Challenges and Solutions}
 
-Developing the fingerprint lock system with an LCD display involved a range of technical challenges that required systematic troubleshooting and innovative problem-solving approaches. These challenges encompassed hardware failures, integration difficulties, and unexpected setbacks that tested our problem-solving skills and adaptability.
+Developing the fingerprint lock system with an LCD display presented several technical challenges that required systematic troubleshooting and innovative solutions. These included hardware failures, integration difficulties, and unexpected setbacks that tested our adaptability.
 
-\textbf{Voltage Misconfiguration:} Early in the integration phase, we encountered a major setback when the LCD and keypad were connected to a voltage higher than recommended. This oversight led to the malfunctioning of these components, necessitating their replacement. We implemented stricter checks for component specifications before integration, which helped prevent further hardware issues.
+\textbf{Voltage Misconfiguration:} During early integration, the LCD and keypad were connected to a higher voltage than recommended, causing malfunction and necessitating replacement. Stricter component checks were implemented to prevent future issues.
 
-\textbf{Arduino Connectivity Issues:} Midway through the project, our Arduino board ceased to be recognized by any connected PC. This issue was critical as it halted our ability to upload new code and test modifications. After extensive troubleshooting, we concluded that the board was defective and replaced it. This incident underscored the importance of having backup components and reinforced our understanding of hardware management in complex projects.
+\textbf{Keypad Sensitivity Issue:} The keypad experienced ghost inputs, making it unreliable. Despite consulting manuals and using the recommended manufacturer library, the problem persisted. Switching to an alternative library successfully resolved the issue.
 
-\textbf{Real-Time Clock Integration:} Initially, the project planned to use a Real-Time Clock (RTC) for access control based on time constraints. However, we encountered persistent challenges in synchronizing it with the system accurately. As a solution, we transitioned to using the Arduino R4 WIFI, which includes a built-in Wi-Fi module, allowing us to fetch accurate time data from internet servers. This approach eliminated the need for an external RTC and improved system reliability.
+\textbf{Arduino Connectivity Issues:} Midway through the project, the Arduino board failed to connect to any PC, halting code uploads and testing. The issue was traced to a defective board, which was subsequently replaced.
 
-\textbf{LCD Backlight Issue:} After replacing a faulty LCD display, we encountered an issue where the backlight did not illuminate at full brightness. Despite thoroughly checking the circuit and code configurations, the problem persisted. Ultimately, replacing the LCD with another new unit resolved the issue, highlighting the necessity of thorough quality checks and alternative troubleshooting methods.
+\textbf{Real-Time Clock Integration:} The initial plan to use an RTC for time-based access control faced synchronization issues. Transitioning to the Arduino R4 WIFI with built-in Wi-Fi resolved this by enabling accurate time retrieval from internet servers, eliminating the need for an external RTC.
 
-The combination of hardware design, software development, and physical construction demonstrates the comprehensive effort involved in creating this system. The challenges encountered and the solutions implemented provided valuable learning experiences that contributed to the robustness and reliability of the final product.
+\textbf{LCD Backlight Issue:} A faulty LCD replacement exhibited dim backlight issues. Despite checking circuits and configurations, the issue persisted until another new unit resolved it, underscoring the need for thorough quality checks.
+
+
+The combination of hardware design, software development, and physical construction demonstrates the comprehensive effort involved in creating this system. The challenges encountered and solutions implemented contributed to the robustness and reliability of the final product.
 
 \subsection{Obtained Results}
 
@@ -142,7 +145,7 @@ One of the project's most complex aspects was ensuring seamless integration and 
 
 We are particularly proud of our development and integration of the administrative interface on the keypad and LCD. This interface allows system administrators to add or remove users efficiently, which is pivotal in environments that require high security with flexible access needs.
 
-\section{Closing Part}
+\section{Evaluation and Reflection}
 
 \subsection{Division of Labor}
 The project was a collaborative effort, with each team member contributing equally across various aspects of the project. In the initial stages, all three team members—Luca Fässler, Valerio Job, and Barthan Sivanantham—worked together to decide on the necessary hardware components to be used. Luca took on the responsibility of purchasing the selected components and ensuring their availability for the project.
@@ -182,8 +185,7 @@ If additional access or specific details are required, please contact any of the
 \textbf{Component Vendors:}
 \newline
 \textbf{-Bastelgarage:} Most components used in the construction of the fingerprint-based security system were purchased from Bastelgarage (\href{https://www.bastelgarage.ch/}{www.bastelgarage.ch}) \\
-\textbf{-Amazon:} Fingerprint Sensor R307S \\
-\textbf{-Galaxus/Digitec:} Replacement Keypad and LCD Display, Replacement Arduino R4 WIFI\\
+\textbf{-Amazon:} Fingerprint Sensor R307S (\href{https://www.amazon.de/Fingerprint-Presence-Detection-Attendance-Recognition/dp/B0CBKVRP5X/r}{www.amazon.de})  \\
 \textbf{-Jumbo:} Wood for the safe box, Hinge, Door Handle\\
 \newline
 \textbf{Libraries Used:}
