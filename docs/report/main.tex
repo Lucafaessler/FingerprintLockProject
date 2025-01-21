@@ -50,7 +50,7 @@
     \noindent\rule{\linewidth}{0.5pt}
 \end{titlepage}
 
-\tableofcontents
+%\tableofcontents
 
 \newpage 
 
@@ -81,17 +81,8 @@ The project represents a comprehensive combination of hardware design, software 
 The development of the access control system involved a combination of hardware integration, software development, and custom physical design. This section outlines the key components used, their integration, and the construction process of the safe.
 
 \subsection{Hardware Components}
-The system utilized the following key hardware components:
-\begin{itemize}
-    \item \textbf{Arduino R4 Minima/R4 WIFI:} The central processing unit of the system, responsible for interfacing with all peripherals such as the fingerprint sensor, LCD display, and electromagnetic lock, while also handling communication via Wi-Fi when needed.
-    \item \textbf{R307 Fingerprint Sensor:} Used for biometric authentication, capable of storing and verifying up to 1,000 fingerprints.
-    \item \textbf{16x2 LCD Display:} Provides real-time feedback to the user, displaying messages such as "Access Granted" or "Place Finger..."
-    \item \textbf{12V Electromagnetic Lock:} Secures the safe, controlled via a relay module to handle high-power requirements safely.
-    \item \textbf{Wi-Fi Module:} Replaced the originally planned Real-Time Clock (RTC) to fetch time data from internet servers, ensuring accurate synchronization for time-based access control operations.
-    \item \textbf{2-Channel Relay Module:} Facilitates power isolation between the Arduino and the 12V lock, ensuring safety and reliability.
-    \item \textbf{RTC: } Initially intended for local timekeeping but was later substituted with an internet-based solution
-    \item \textbf{Keypad 4x4:} Used for administrative functions, allowing authorized personnel to manage access permissions directly from the device.
-\end{itemize}
+The system utilized several key hardware components, previously detailed in the initial report. Notably, the Real-Time Clock (RTC) module, originally planned for local timekeeping, was later substituted with a Wi-Fi module. This change enabled the system to fetch time data from internet servers, ensuring accurate synchronization for time-based access control operations.
+
 
 \subsection{System Integration}
 The design phase involved selecting the appropriate components that could be integrated into a cohesive system. We chose the Arduino as the microcontroller because of its versatility and support for multiple peripherals. The fingerprint sensor was selected for its high accuracy and reliability in biometric recognition. The LCD display was integrated to provide real-time feedback to users, and the keypad was incorporated for administrative control, allowing authorized personnel to manage access permissions directly from the device.
@@ -122,7 +113,6 @@ Time synchronization is handled by the Wi-Fi module, which retrieves accurate ti
 
 The software serves as the backbone of the system, seamlessly integrating all components and enabling reliable and user-friendly operation.
 
-\newpage
 \subsection{Challenges and Solutions}
 
 Developing the fingerprint lock system with an LCD display involved a range of technical challenges that required systematic troubleshooting and innovative problem-solving approaches. These challenges encompassed hardware failures, integration difficulties, and unexpected setbacks that tested our problem-solving skills and adaptability.
@@ -152,7 +142,6 @@ One of the project's most complex aspects was ensuring seamless integration and 
 
 We are particularly proud of our development and integration of the administrative interface on the keypad and LCD. This interface allows system administrators to add or remove users efficiently, which is pivotal in environments that require high security with flexible access needs.
 
-\newpage
 \section{Closing Part}
 
 \subsection{Division of Labor}
@@ -175,7 +164,7 @@ This project not only reinforced our technical skills in designing and implement
 The challenges we encountered, such as hardware malfunctions and software bugs, provided us with firsthand experience in troubleshooting and problem-solving under pressure. These experiences have prepared us for similar challenges in future projects. Additionally, during this project, we overcame the problems with creative solutions, which in the end even improved the system. We also added more components, such as the keypad and a CAD-designed safe box, resulting in an even better and more user-friendly final product.
 
 In conclusion, this project achieved its goals of developing a secure, efficient, and user-friendly access control system using biometric authentication. It has demonstrated the potential of integrating advanced technologies into practical applications, offering insights into both the complexities and rewards of working on interdisciplinary projects in the field of computer architecture.
-\newpage
+
 \section{Append}
 
 \subsection{Disclaimer on Code Origin and Use of AI}
